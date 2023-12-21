@@ -1,0 +1,41 @@
+version: "3.2"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.8-rc-management
+    container_name: rabbitmq
+    ports:
+        - '5672:5672'
+        - '15672:15672'
+    volumes:
+      - rabbit_mqdata:/usr/share/rabbitmq/data
+
+  producer:
+    build: producer
+    depends_on:
+        - rabbitmq
+    environment:
+        AMQP_URL: 'amqp://rabbitmq?connection_attempts=10&retry_delay=5'
+    volumes:
+      - ./producer:/Users/olgageta/учёба/hw_nis/producer
+
+  consumer1:
+    build: consumer
+    depends_on:
+        - rabbitmq
+    environment:
+        AMQP_URL: 'amqp://rabbitmq?connection_attempts=10&retry_delay=5'
+    volumes:
+      - ./consumer:/Users/olgageta/учёба/hw_nis/consumer
+      
+  consumer2:
+    build: consumer
+    depends_on:
+        - rabbitmq
+    environment:
+        AMQP_URL: 'amqp://rabbitmq?connection_attempts=10&retry_delay=5'
+    volumes:
+      - ./consumer:/Users/olgageta/учёба/hw_nis/consumer
+volumes:
+    rabbit_mqdata:
+      driver: local
