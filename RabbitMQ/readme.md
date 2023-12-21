@@ -1,8 +1,8 @@
 Из этой папки:
-> docker-compose build  
-> docker-compose up
+>> docker-compose build  
+>> docker-compose up
 
 Для прекращения:
-> Cmd + C
+>> Cmd + C
 
 
